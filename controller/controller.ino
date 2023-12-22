@@ -1,19 +1,5 @@
 // Seed XIAO nrf52840
 
-/*********************************************************************
- This is an example for our nRF52 based Bluefruit LE modules
-
- Pick one up today in the adafruit shop!
-
- Adafruit invests time and resources providing this open source code,
- please support Adafruit and open-source hardware by purchasing
- products from Adafruit!
-
- MIT license, check LICENSE for more information
- All text above, and the splash screen below must be included in
- any redistribution
-*********************************************************************/
-
 #include <bluefruit.h>
 
 // OTA DFU service
@@ -36,6 +22,8 @@ unsigned long FADE_PEDIOD = 3000;  // fade time is 3 seconds
 unsigned long fadeStartTime1, fadeStartTime2;
 
 int ledStatus = 1;
+
+#define MINPWM 135
 
 void setup(void) {
   Serial.begin(115200);
@@ -248,9 +236,9 @@ void fadeLED1() {
   if (progress <= FADE_PEDIOD) {
     long brightness;
     if (fadeDirection1 == true) {
-      brightness = map(progress, 0, FADE_PEDIOD, 120, 255);
+      brightness = map(progress, 0, FADE_PEDIOD, MINPWM, 255);
     } else {
-      brightness = map(progress, 0, FADE_PEDIOD, 255, 120);
+      brightness = map(progress, 0, FADE_PEDIOD, 255, MINPWM);
     }
 
     analogWrite(LED_PIN_1, brightness);
@@ -266,9 +254,9 @@ void fadeLED2() {
   if (progress <= FADE_PEDIOD) {
     long brightness;
     if (fadeDirection2 == true) {
-      brightness = map(progress, 0, FADE_PEDIOD, 120, 255);
+      brightness = map(progress, 0, FADE_PEDIOD, MINPWM, 255);
     } else {
-      brightness = map(progress, 0, FADE_PEDIOD, 255, 120);
+      brightness = map(progress, 0, FADE_PEDIOD, 255, MINPWM);
     }
     analogWrite(LED_PIN_2, brightness);
   } else {
